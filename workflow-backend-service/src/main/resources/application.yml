@@ -1,0 +1,126 @@
+spring:
+  application:
+    name: b2b-workflow-platform
+
+
+  data:
+    redis:
+      repositories:
+        enabled: false
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:b2b_workflow}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:admin}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      leak-detection-threshold: 60000
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 1
+    locations: classpath:db/migration
+    schemas: public
+  # JPA Configuration
+  jpa:
+    hibernate:
+    #      naming:
+    #        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    show-sql: ${SHOW_SQL:false}
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: false
+        jdbc:
+          batch_size: 25
+        order_inserts: true
+        order_updates: true
+
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    timeout: 2000ms
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        min-idle: 1
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${JWT_ISSUER_URI:https://your-auth-server}
+          jwk-set-uri: ${JWT_JWK_SET_URI:https://your-auth-server/.well-known/jwks.json}
+    enabled: false
+
+  # Jackson Configuration
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: UTC
+    default-property-inclusion: non_null
+  doc:
+    swagger-ui:
+          enabled: true  # ensure Swagger UI is enabled
+
+
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+  error:
+    include-stacktrace: on_param
+    include-message: always
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# OpenAPI Documentation
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+
+
+
+app:
+  workflow:
+    default-timeout: 24       # hours
+    auto-escalation: true
+    max-escalation-levels: 3
+    audit-enabled: true
+
+swagger:
+  server:
+    dev-url: http://localhost:${server.port}
+    dev-description: Development Server
+    prod-url: https://api.company.com
+    prod-description: Production Server
+
+
