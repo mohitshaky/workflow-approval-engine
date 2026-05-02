@@ -1,5 +1,7 @@
 # WorkFlow — Configurable Approval & Workflow Backend
 
+[![CI](https://github.com/mohitshaky/workflow-approval-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/mohitshaky/workflow-approval-engine/actions/workflows/ci.yml)
+
 ![Java](https://img.shields.io/badge/Java-21-orange?logo=java) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-green?logo=springboot) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-blue?logo=postgresql) ![Redis](https://img.shields.io/badge/Redis-red?logo=redis) ![Docker](https://img.shields.io/badge/Docker-ready-blue?logo=docker) ![License](https://img.shields.io/badge/license-MIT-brightgreen)
 
 > A production-ready, configurable workflow & approval backend built with **Spring Boot 3**, **PostgreSQL**, **Redis**, and **OAuth2**. Supports multi-step approval processes, email notifications, Docker & Kubernetes deployment.
